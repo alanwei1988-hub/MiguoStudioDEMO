@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>米粿Studio · 管理后台原型</title>
+<style>
+:root {
+  color-scheme: light;
+  --bg:#f5f6f8; --surface:#fff; --surface-2:#f9fafb; --fg:#15171a; --muted:#6f7680;
+  --border:#e3e6ea; --accent:#246bfd; --accent-soft:#eaf0ff; --ok:#16865c; --ok-soft:#e7f6ef;
+  --warn:#aa6b00; --warn-soft:#fff3d9; --danger:#cb3b42; --danger-soft:#fdecee;
+  --shadow:0 16px 44px rgb(21 30 48 / .10); --radius:14px;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+}
+[data-theme="dark"] {
+  color-scheme:dark; --bg:#101215; --surface:#181b20; --surface-2:#1d2127; --fg:#f4f6f8; --muted:#9aa2ad;
+  --border:#2b3038; --accent:#78a2ff; --accent-soft:#1d2b4c; --ok:#55c895; --ok-soft:#17352a;
+  --warn:#e2a849; --warn-soft:#382b18; --danger:#ff7b83; --danger-soft:#3a2024; --shadow:0 20px 56px rgb(0 0 0 / .34);
+}
+*{box-sizing:border-box} html,body{margin:0;min-height:100%;font-family:var(--font);background:var(--bg);color:var(--fg)}
+button,input,select,textarea{font:inherit;color:inherit} button{cursor:pointer}
+.shell{min-height:100vh;display:grid;grid-template-columns:224px minmax(0,1fr)}
+.sidebar{position:sticky;top:0;height:100vh;border-right:1px solid var(--border);background:color-mix(in srgb,var(--surface) 92%,transparent);padding:18px 14px;display:flex;flex-direction:column;backdrop-filter:blur(20px)}
+.brand{display:flex;gap:10px;align-items:center;padding:0 8px 18px}.mark{width:30px;height:30px;border-radius:9px;background:var(--fg);color:var(--surface);display:grid;place-items:center;font-weight:750}.brand b{font-size:14px}.brand small{display:block;color:var(--muted);font-size:10px;margin-top:1px}
+.nav-label{padding:12px 10px 5px;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.08em}
+.nav{display:flex;flex-direction:column;gap:3px}.nav button{border:0;background:transparent;border-radius:9px;text-align:left;padding:9px 10px;color:var(--muted);display:flex;align-items:center;gap:9px}.nav button:hover{background:var(--surface-2);color:var(--fg)}.nav button.active{background:var(--accent-soft);color:var(--accent);font-weight:650}.nav .ico{width:20px;text-align:center;font-size:12px}
+.sidefoot{margin-top:auto;border-top:1px solid var(--border);padding-top:12px}.admin{display:flex;align-items:center;gap:8px;padding:8px}.avatar{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:white;font-size:11px;font-weight:700}.admin span{min-width:0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.admin small{display:block;color:var(--muted);font-size:10px}
+.main{min-width:0}.topbar{height:58px;position:sticky;top:0;z-index:5;border-bottom:1px solid var(--border);background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(18px);display:flex;align-items:center;padding:0 24px;gap:10px}.topbar h1{font-size:15px;margin:0;letter-spacing:-.015em}.grow{flex:1}.prototype{font-size:11px;color:var(--warn);border:1px solid color-mix(in srgb,var(--warn) 35%,var(--border));background:var(--warn-soft);padding:4px 8px;border-radius:999px}.control,.iconbtn{height:32px;border:1px solid var(--border);background:var(--surface);border-radius:9px;padding:0 9px;font-size:12px}.iconbtn{width:32px;padding:0}.search{width:250px;position:relative}.search input{width:100%;height:32px;border:1px solid var(--border);background:var(--surface);border-radius:9px;padding:0 10px 0 30px;outline:none}.search:before{content:"⌕";position:absolute;left:10px;top:5px;color:var(--muted)}
+.content{padding:22px 24px 44px;max-width:1600px;margin:0 auto}.heading{display:flex;align-items:end;gap:16px;margin-bottom:18px}.heading h2{font-size:24px;margin:0;letter-spacing:-.035em}.heading p{margin:4px 0 0;color:var(--muted);font-size:12px}.heading .actions{margin-left:auto;display:flex;gap:8px}
+.btn{border:1px solid var(--border);background:var(--surface);border-radius:9px;padding:7px 11px;font-size:12px;font-weight:600}.btn:hover{border-color:var(--muted)}.btn.primary{background:var(--accent);border-color:var(--accent);color:white}.btn.danger{color:var(--danger)}.btn:disabled{opacity:.5;cursor:not-allowed}
+.grid{display:grid;gap:14px}.kpis{grid-template-columns:repeat(6,minmax(0,1fr));margin-bottom:14px}.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:15px}.kpi .label{font-size:11px;color:var(--muted)}.kpi .value{font-size:23px;font-weight:740;letter-spacing:-.035em;margin:7px 0 4px;font-variant-numeric:tabular-nums}.delta{font-size:10px;color:var(--ok)}.delta.bad{color:var(--danger)}
+.two{grid-template-columns:minmax(0,2fr) minmax(280px,1fr);margin-bottom:14px}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.cardhead{display:flex;align-items:center;margin-bottom:14px}.cardhead h3{font-size:13px;margin:0}.cardhead small{margin-left:auto;color:var(--muted);font-size:10px}.legend{display:flex;gap:14px;font-size:10px;color:var(--muted)}.legend i{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:4px}.chart{height:210px;width:100%;display:block}.chart-grid{stroke:var(--border);stroke-width:1}.chart-line{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.chart-area{fill:color-mix(in srgb,var(--accent) 12%,transparent)}.chart-text{fill:var(--muted);font-size:10px;font-family:var(--font)}
+.alerts{display:flex;flex-direction:column;gap:8px}.alert{display:grid;grid-template-columns:8px 1fr auto;gap:9px;align-items:start;padding:10px;border-radius:10px;background:var(--surface-2);border:1px solid var(--border)}.alert .dot{width:8px;height:8px;border-radius:50%;margin-top:4px;background:var(--warn)}.alert.danger .dot{background:var(--danger)}.alert.ok .dot{background:var(--ok)}.alert b{font-size:11px}.alert p{margin:2px 0 0;font-size:10px;color:var(--muted)}.alert time{font-size:9px;color:var(--muted)}
+.meter{height:5px;background:var(--border);border-radius:999px;overflow:hidden;margin-top:8px}.meter span{display:block;height:100%;border-radius:inherit;background:var(--accent)}.stage{padding:10px 0}.stage+.stage{border-top:1px solid var(--border)}.stage-row{display:flex;align-items:center;font-size:11px}.stage-row b{margin-left:auto;font-variant-numeric:tabular-nums}.stage-row small{width:58px;color:var(--muted)}
+.filters{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}.filters input,.filters select{height:34px;border:1px solid var(--border);background:var(--surface);border-radius:9px;padding:0 10px;font-size:11px;outline:none}.filters input{min-width:220px}.tablewrap{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);overflow:auto}.table{width:100%;border-collapse:collapse;min-width:900px}.table th{position:sticky;top:0;background:var(--surface-2);color:var(--muted);font-size:10px;font-weight:600;text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);white-space:nowrap}.table td{font-size:11px;padding:11px 12px;border-bottom:1px solid var(--border);white-space:nowrap;font-variant-numeric:tabular-nums}.table tr:last-child td{border-bottom:0}.table tr:hover td{background:color-mix(in srgb,var(--accent) 3%,var(--surface))}.entity b{display:block;font-size:11px}.entity small{color:var(--muted);font-size:9px}.pill{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:3px 7px;font-size:9px;font-weight:650;background:var(--surface-2);color:var(--muted)}.pill.ok{background:var(--ok-soft);color:var(--ok)}.pill.warn{background:var(--warn-soft);color:var(--warn)}.pill.danger{background:var(--danger-soft);color:var(--danger)}.num{font-variant-numeric:tabular-nums}.subtle{color:var(--muted)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--border);margin-bottom:14px}.tabs button{border:0;background:transparent;color:var(--muted);padding:9px 11px;border-bottom:2px solid transparent;font-size:11px}.tabs button.active{color:var(--accent);border-color:var(--accent);font-weight:650}
+.model-hero{display:grid;grid-template-columns:1.4fr .8fr;gap:14px;margin-bottom:14px}.model-name{font-size:23px;font-weight:740;letter-spacing:-.03em;margin:9px 0 3px}.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:15px}.fact{padding:10px;background:var(--surface-2);border-radius:9px}.fact small{display:block;color:var(--muted);font-size:9px}.fact b{font-size:12px;font-variant-numeric:tabular-nums}.health{display:grid;place-items:center;text-align:center}.ring{width:104px;height:104px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--ok) 0 97.8%,var(--border) 97.8%)}.ring:before{content:"";width:80px;height:80px;border-radius:50%;background:var(--surface);position:absolute}.ring b{z-index:1;font-size:18px}.health p{font-size:10px;color:var(--muted)}
+.route{display:grid;grid-template-columns:1.1fr 1fr 1fr 90px;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid var(--border);font-size:11px}.route:last-child{border:0}.route small{display:block;color:var(--muted);font-size:9px}
+.audit{display:grid;grid-template-columns:120px 150px 1fr 100px;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:10px}.audit:last-child{border:0}.audit time,.audit small{color:var(--muted)}
+dialog{border:0;padding:0;background:transparent;max-width:none}dialog::backdrop{background:rgb(12 17 25 / .44);backdrop-filter:blur(5px)}dialog[open]{position:fixed;inset:50% auto auto 50%;transform:translate(-50%,-50%);margin:0;width:min(520px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto;border-radius:16px}.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);padding:20px}.modal h3{margin:0;font-size:17px}.modal .desc{font-size:11px;color:var(--muted);margin:4px 0 14px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.field.full{grid-column:1/-1}.field label{display:block;color:var(--muted);font-size:10px;font-weight:650;margin:0 0 5px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--border);background:var(--surface-2);border-radius:9px;padding:8px 9px;font-size:11px;outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}.hint{font-size:9px;color:var(--muted);margin-top:4px}.modal-foot{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}.test-result{display:none;margin-top:12px;padding:10px;border-radius:9px;background:var(--ok-soft);color:var(--ok);font-size:10px}.warningbox{padding:10px;background:var(--warn-soft);color:var(--warn);border-radius:9px;font-size:10px;margin:12px 0}.toasts{position:fixed;right:20px;bottom:20px;z-index:20;display:flex;flex-direction:column;gap:8px}.toast{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 13px;box-shadow:var(--shadow);font-size:11px;animation:rise .2s ease}@keyframes rise{from{opacity:0;transform:translateY(7px)}}
+@media(max-width:1200px){.kpis{grid-template-columns:repeat(3,1fr)}.facts{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){.shell{grid-template-columns:64px minmax(0,1fr)}.sidebar{padding:18px 8px}.brand{padding:0 8px 18px}.brand div,.nav button span:not(.ico),.nav-label,.admin span{display:none}.nav button{justify-content:center}.topbar{padding:0 14px}.search{display:none}.content{padding:18px 14px}.two,.three,.model-hero{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.kpis{grid-template-columns:1fr}.heading{align-items:start;flex-direction:column}.heading .actions{margin-left:0}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.prototype,.topbar select{display:none}.route{grid-template-columns:1fr 1fr}.route>:nth-child(3){display:none}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="mark">米</div><div><b>米粿Studio</b><small>平台管理后台</small></div></div>
+    <div class="nav-label">运营</div>
+    <nav class="nav" aria-label="管理导航">
+      <button data-view="overview" class="active"><span class="ico">◫</span><span>管理概览</span></button>
+      <button data-view="organizations"><span class="ico">◇</span><span>组织</span></button>
+      <button data-view="accounts"><span class="ico">◎</span><span>账号</span></button>
+      <button data-view="credits"><span class="ico">◉</span><span>积分中心</span></button>
+      <button data-view="tasks"><span class="ico">⇄</span><span>任务运营</span></button>
+    </nav>
+    <div class="nav-label">平台</div>
+    <nav class="nav">
+      <button data-view="models"><span class="ico">✦</span><span>模型与 Agent</span></button>
+      <button data-view="audit"><span class="ico">⌁</span><span>审计与安全</span></button>
+    </nav>
+    <div class="sidefoot">
+      <button class="nav-return btn" style="width:100%;margin-bottom:8px">← 返回创作工作台</button>
+      <div class="admin"><div class="avatar">A</div><span>alanwei@miguocomics.com<small>Platform Admin</small></span></div>
+    </div>
+  </aside>
+  <main class="main">
+    <header class="topbar">
+      <h1 id="pageTitle">管理概览</h1><span class="prototype">交互原型 · 不连接后端</span><div class="grow"></div>
+      <select class="control" aria-label="环境"><option>生产环境</option><option>预发布环境</option></select>
+      <select class="control" aria-label="时间范围"><option>最近 7 天</option><option>今天</option><option>最近 30 天</option></select>
+      <div class="search"><input id="globalSearch" placeholder="搜索组织、账号、任务 ID"></div>
+      <button class="iconbtn" id="themeBtn" title="切换主题">◐</button>
+    </header>
+    <section class="content" id="content" aria-live="polite"></section>
+  </main>
+</div>
+
+<dialog id="modelDialog" data-admin-id="model-config-dialog">
+  <form class="modal" id="modelForm">
+    <h3>新建主模型配置草稿</h3>
+    <p class="desc">密钥仅在真实后台提交到服务端。本原型不会保存、发送或写入浏览器存储。</p>
+    <div class="formgrid">
+      <div class="field full"><label for="configName">配置名称</label><input id="configName" value="默认主模型 · 候选版本"></div>
+      <div class="field"><label for="protocol">API 协议</label><select id="protocol"><option>OpenAI Responses</option><option>OpenAI-compatible Responses</option></select></div>
+      <div class="field"><label for="modelId">模型型号</label><input id="modelId" value="gpt-5.6-terra" autocomplete="off"></div>
+      <div class="field full"><label for="baseUrl">Base URL</label><input id="baseUrl" type="url" value="https://api.openai.com/v1" autocomplete="off"><div class="hint">仅允许 HTTPS 和平台批准的主机；服务端会执行 DNS/IP 与重定向校验。</div></div>
+      <div class="field full"><label for="apiKey">API Key（write-only）</label><input id="apiKey" type="password" placeholder="留空则不替换现有密钥" autocomplete="new-password"><div class="hint">正式 API 只返回密钥指纹，永不返回明文。</div></div>
+      <div class="field"><label for="reasoning">Reasoning effort</label><select id="reasoning"><option>medium</option><option>low</option><option>high</option><option>xhigh</option></select></div>
+      <div class="field"><label for="timeout">请求超时</label><select id="timeout"><option>120 秒</option><option>60 秒</option><option>300 秒</option></select></div>
+      <div class="field"><label for="maxTokens">最大输出 Token</label><input id="maxTokens" type="number" value="8192"></div>
+      <div class="field"><label for="fallback">失败回退</label><select id="fallback"><option>上一已验证版本</option><option>不自动回退</option></select></div>
+    </div>
+    <div class="test-result" id="testResult">✓ 鉴权与模型读取测试通过 · 428 ms · request_id 已记录</div>
+    <div class="modal-foot"><button type="button" class="btn" data-close="modelDialog">取消</button><button type="button" class="btn" id="testConnection">测试连接</button><button class="btn primary" type="submit">保存为草稿</button></div>
+  </form>
+</dialog>
+
+<dialog id="creditDialog" data-admin-id="credit-adjust-dialog">
+  <form class="modal" id="creditForm">
+    <h3>人工积分调整</h3><p class="desc">调整生成不可变账本流水，不能删除或覆盖历史记录。</p>
+    <div class="formgrid">
+      <div class="field full"><label>组织</label><select><option>星河漫画社</option><option>青柠绘界</option><option>Northlight Studio</option></select></div>
+      <div class="field"><label>操作类型</label><select><option>授予积分</option><option>扣减积分</option><option>到期调整</option></select></div>
+      <div class="field"><label>积分数量</label><input type="number" min="1" value="10000"></div>
+      <div class="field full"><label>原因</label><textarea rows="3" required placeholder="必须填写具体原因"></textarea></div>
+      <div class="field full"><label>关联工单 / 凭证</label><input placeholder="例如 FIN-2026-0813"></div>
+    </div>
+    <div class="warningbox">调整前可用积分 84,260 → 调整后 94,260。正式提交需要重新验证身份并写入审计日志。</div>
+    <div class="modal-foot"><button type="button" class="btn" data-close="creditDialog">取消</button><button class="btn primary" type="submit">确认并生成流水</button></div>
+  </form>
+</dialog>
+
+<dialog id="taskDialog" data-admin-id="task-detail-dialog">
+  <div class="modal"><h3>任务 MG-8F41C2</h3><p class="desc">费用结果不确定 · 自动重试已关闭</p>
+    <div class="warningbox">供应商已收到请求，但响应体在传输中断开。当前 120 积分保持冻结，必须先完成费用核对。</div>
+    <div class="route"><div><small>组织</small>青柠绘界</div><div><small>执行账号</small>lin@example.com</div><div><small>阶段</small>光影塑造</div><span class="pill warn">待核对</span></div>
+    <div class="route"><div><small>供应商</small>米粿 MCP</div><div><small>尝试</small>1 / 2</div><div><small>耗时</small>89.4 s</div><span class="pill">120 积分</span></div>
+    <div class="route"><div><small>费用轨迹</small>reserve → hold_unknown</div><div><small>错误码</small>unknown_outcome</div><div><small>输入版本</small>仍为 current</div><span class="pill danger">禁止重试</span></div>
+    <div class="modal-foot"><button type="button" class="btn" data-close="taskDialog">关闭</button><button class="btn" id="reconcileDemo">进入费用核对</button></div>
+  </div>
+</dialog>
+<div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+<script>
+const titles={overview:'管理概览',organizations:'组织',accounts:'账号',credits:'积分中心',tasks:'任务运营',models:'模型与 Agent',audit:'审计与安全'};
+const kpi=(label,value,delta,bad=false)=>`<article class="card kpi"><div class="label">${label}</div><div class="value">${value}</div><div class="delta ${bad?'bad':''}">${delta}</div></article>`;
+const status=(text,type='')=>`<span class="pill ${type}">${text}</span>`;
+function heading(title,desc,actions=''){return `<div class="heading"><div><h2>${title}</h2><p>${desc}</p></div><div class="actions">${actions}</div></div>`}
+function overview(){return `${heading('平台运营一览','最近 7 天 · 数据更新时间 2 分钟前','<button class="btn">刷新数据</button>')}
+<div class="grid kpis">${kpi('活跃组织','24','较上周期 +3')}${kpi('活跃账号','186','较上周期 +12')}${kpi('组织可用积分','1,284,620','已预占 42,880')}${kpi('本期已结算','318,420','较上周期 +8.6%')}${kpi('技术成功率','96.8%','较上周期 +0.7%')}${kpi('待核对积分','360','3 笔需处理',true)}</div>
+<div class="grid two"><article class="card"><div class="cardhead"><h3>积分消耗与任务量</h3><div class="grow"></div><div class="legend"><span><i style="background:var(--accent)"></i>结算积分</span><span><i style="background:var(--ok)"></i>成功任务</span></div></div>
+<svg class="chart" viewBox="0 0 760 210" preserveAspectRatio="none" aria-label="七日积分趋势"><path class="chart-grid" d="M35 25H745M35 70H745M35 115H745M35 160H745"/><path class="chart-area" d="M35 170 L145 135 L255 148 L365 96 L475 112 L585 64 L695 78 L745 50 L745 190 L35 190Z"/><path class="chart-line" d="M35 170 L145 135 L255 148 L365 96 L475 112 L585 64 L695 78 L745 50"/><text class="chart-text" x="35" y="205">08/07</text><text class="chart-text" x="245" y="205">08/09</text><text class="chart-text" x="470" y="205">08/11</text><text class="chart-text" x="690" y="205">08/13</text></svg></article>
+<article class="card"><div class="cardhead"><h3>需要处理</h3><small>5 项</small></div><div class="alerts"><div class="alert danger"><span class="dot"></span><div><b>3 笔积分待核对</b><p>真实调用结果未知，自动重试已冻结</p></div><time>刚刚</time></div><div class="alert"><span class="dot"></span><div><b>青柠绘界余额低于阈值</b><p>可用 1,820 · 阈值 2,000</p></div><time>12m</time></div><div class="alert"><span class="dot"></span><div><b>光影阶段 P95 延迟上升</b><p>178s · 较基线 +34%</p></div><time>26m</time></div><div class="alert ok"><span class="dot"></span><div><b>主模型连接正常</b><p>gpt-5.6-terra · 97.8%</p></div><time>3m</time></div></div></article></div>
+<div class="grid three"><article class="card"><div class="cardhead"><h3>分阶段稳定性</h3><small>技术成功率 / P95</small></div>${[['勾线','98.2%','42s',98],['上色','96.4%','61s',96],['光影','92.8%','178s',93]].map(x=>`<div class="stage"><div class="stage-row"><small>${x[0]}</small><span>${x[2]}</span><b>${x[1]}</b></div><div class="meter"><span style="width:${x[3]}%"></span></div></div>`).join('')}</article>
+<article class="card"><div class="cardhead"><h3>组织消耗排行</h3><small>本周期</small></div>${[['星河漫画社','96,420',78],['Northlight Studio','62,880',52],['青柠绘界','51,360',42]].map((x,i)=>`<div class="stage"><div class="stage-row"><small>${i+1}</small><span>${x[0]}</span><b>${x[1]}</b></div><div class="meter"><span style="width:${x[2]}%"></span></div></div>`).join('')}</article>
+<article class="card"><div class="cardhead"><h3>主模型健康</h3><small>默认路由</small></div><div class="stage-row"><span>gpt-5.6-terra</span>${status('正常','ok')}</div><div class="facts" style="grid-template-columns:1fr 1fr"><div class="fact"><small>成功率</small><b>97.8%</b></div><div class="fact"><small>P95 延迟</small><b>8.4s</b></div><div class="fact"><small>输入 Token</small><b>8.2M</b></div><div class="fact"><small>配置版本</small><b>v12</b></div></div></article></div>`}
+function organizations(){return `${heading('组织','组织余额、成员活跃与交付稳定性','<button class="btn primary" data-action="newOrg">新建组织</button>')}<div class="filters"><input placeholder="搜索组织名或 ID"><select><option>全部状态</option><option>正常</option><option>低余额</option><option>暂停</option></select><select><option>按本月消耗排序</option><option>按成功率排序</option></select></div><div class="tablewrap"><table class="table"><thead><tr><th>组织</th><th>成员</th><th>可用积分</th><th>已预占</th><th>本月消耗</th><th>任务量</th><th>最终成功率</th><th>异常</th><th>最近活跃</th></tr></thead><tbody>
+${[['星河漫画社','42 / 31','84,260','8,640','96,420','1,284','97.6%','正常','4 分钟前'],['青柠绘界','18 / 14','1,820','2,280','51,360','746','91.8%','低余额 · 1 待核对','12 分钟前'],['Northlight Studio','27 / 19','128,600','12,400','62,880','912','98.1%','正常','19 分钟前'],['墨羽工作室','9 / 4','18,200','0','8,120','126','95.4%','2 个失败','2 小时前']].map((r,i)=>`<tr data-open="org"><td class="entity"><b>${r[0]}</b><small>ORG-${String(i+1).padStart(4,'0')}</small></td><td>${r[1]}</td><td><b>${r[2]}</b></td><td>${r[3]}</td><td>${r[4]}</td><td>${r[5]}</td><td>${r[6]}</td><td>${r[7].includes('正常')?status(r[7],'ok'):status(r[7],r[7].includes('低')?'warn':'danger')}</td><td class="subtle">${r[8]}</td></tr>`).join('')}</tbody></table></div>`}
+function accounts(){return `${heading('账号','跨组织查看账号使用归因、成功率与安全状态','<button class="btn">导出当前结果</button>')}<div class="filters"><input placeholder="搜索姓名或邮箱"><select><option>全部平台角色</option><option>Platform Admin</option><option>Member</option></select><select><option>全部状态</option><option>正常</option><option>已禁用</option></select></div><div class="tablewrap"><table class="table"><thead><tr><th>账号</th><th>平台角色</th><th>所属组织</th><th>本月积分归因</th><th>任务量</th><th>最终成功率</th><th>重试率</th><th>最后登录</th><th>状态</th></tr></thead><tbody>
+${[['林墨','lin@example.com','Member','青柠绘界','12,480','188','89.6%','14.2%','7 分钟前','正常'],['顾遥','gu@example.com','Member','星河漫画社 / 墨羽','18,720','264','98.1%','3.8%','14 分钟前','正常'],['Alan Wei','alanwei@miguocomics.com','Platform Admin','平台','0','12','100%','0%','18 分钟前','正常'],['陈屿','chen@example.com','Member','Northlight Studio','8,640','124','97.2%','4.1%','1 小时前','正常']].map(r=>`<tr><td class="entity"><b>${r[0]}</b><small>${r[1]}</small></td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td>${r[5]}</td><td>${r[6]}</td><td>${r[7]}</td><td class="subtle">${r[8]}</td><td>${status(r[9],'ok')}</td></tr>`).join('')}</tbody></table></div>`}
+function credits(){return `${heading('积分中心','组织共享账户、不可变账本与待核对费用','<button class="btn primary" data-action="credit">人工积分调整</button>')}<div class="grid kpis">${kpi('账面余额总额','1,339,420','24 个组织')}${kpi('已预占','54,440','286 个活动任务')}${kpi('本期结算','318,420','较上周期 +8.6%')}${kpi('待核对冻结','360','3 笔需处理',true)}${kpi('本期人工调整','20,000','2 笔有审计记录')}${kpi('低余额组织','2','需要运营跟进',true)}</div><div class="tabs"><button class="active">账本流水</button><button>待核对费用 3</button><button>预算与告警</button></div><div class="filters"><input placeholder="搜索组织、任务或幂等键"><select><option>全部流水类型</option><option>授予</option><option>预占</option><option>结算</option><option>释放</option><option>待核对</option></select></div><div class="tablewrap"><table class="table"><thead><tr><th>时间</th><th>组织</th><th>类型</th><th>积分变化</th><th>变动后可用</th><th>任务</th><th>成员</th><th>操作者 / 原因</th><th>状态</th></tr></thead><tbody>
+${[['10:42:18','星河漫画社','结算','-120','84,260','MG-A184','顾遥','system · 光影完成','已入账'],['10:41:02','青柠绘界','待核对','0（冻结 120）','1,820','MG-8F41C2','林墨','system · 响应中断','待核对'],['10:37:46','Northlight Studio','释放','+40','128,600','MG-92D18','陈屿','system · 队列取消','已入账'],['09:16:30','星河漫画社','授予','+10,000','92,880','—','—','Alan · 合同续费','已入账']].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td><b>${r[3]}</b></td><td>${r[4]}</td><td>${r[5]}</td><td>${r[6]}</td><td>${r[7]}</td><td>${status(r[8],r[8]==='待核对'?'warn':'ok')}</td></tr>`).join('')}</tbody></table></div>`}
+function tasks(){return `${heading('任务运营','实时任务、失败归因与费用安全恢复','<button class="btn">刷新队列</button>')}<div class="grid kpis">${kpi('排队中','18','最久等待 42s')}${kpi('运行中','12','Worker 使用率 68%')}${kpi('已成功','2,481','最近 7 天')}${kpi('已失败','82','技术失败率 3.2%',true)}${kpi('已取消','36','不计成功率分母')}${kpi('费用待核对','3','自动重试已冻结',true)}</div><div class="filters"><input placeholder="搜索任务 ID"><select><option>全部组织</option><option>星河漫画社</option><option>青柠绘界</option></select><select><option>全部阶段</option><option>勾线</option><option>上色</option><option>光影</option></select><select><option>全部状态</option><option>失败</option><option>待核对</option></select></div><div class="tablewrap"><table class="table"><thead><tr><th>任务 ID</th><th>组织 / 成员</th><th>项目 / 画格</th><th>工序</th><th>状态</th><th>尝试</th><th>提供方</th><th>排队 / 运行</th><th>积分</th><th>费用状态</th></tr></thead><tbody>
+${[['MG-8F41C2','青柠绘界 · 林墨','《雾港》· P-018','光影','待核对','1 / 2','米粿 MCP','3s / 89s','120','未知'],['MG-A184D0','星河漫画社 · 顾遥','《山海录》· P-042','上色','已成功','1 / 2','米粿 MCP','2s / 44s','80','已结算'],['AG-31F8A1','Northlight · 陈屿','意图理解 · T-921','Agent','已成功','1 / 1','gpt-5.6-terra','0s / 4.2s','18','已结算'],['MG-92D18E','墨羽工作室 · 苏悦','《长夜》· P-007','勾线','已失败','2 / 2','米粿 MCP','1s / 16s','40','未扣费']].map((r,i)=>`<tr ${i===0?'data-action="task"':''}><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${status(r[4],r[4]==='已成功'?'ok':r[4]==='待核对'?'warn':'danger')}</td><td>${r[5]}</td><td>${r[6]}</td><td>${r[7]}</td><td>${r[8]}</td><td>${r[9]}</td></tr>`).join('')}</tbody></table></div>`}
+function models(){return `${heading('模型与 Agent','主模型连接、不可变部署版本和能力路由','<button class="btn" data-action="rollback">回滚</button><button class="btn primary" data-action="model">新建配置草稿</button>')}<div class="model-hero"><article class="card"><div class="cardhead"><h3>当前生效配置</h3>${status('运行正常','ok')}</div><div class="model-name">gpt-5.6-terra</div><div class="subtle" style="font-size:11px">OpenAI Responses · api.openai.com · 密钥 ••••7K2Q · revision v12</div><div class="facts"><div class="fact"><small>发布时间</small><b>08/12 16:40</b></div><div class="fact"><small>24h 调用</small><b>18,420</b></div><div class="fact"><small>输入 / 输出</small><b>8.2M / 1.4M</b></div><div class="fact"><small>P95 延迟</small><b>8.4s</b></div></div></article><article class="card health"><div class="ring"><b>97.8%</b></div><p>24 小时技术成功率<br>最近探测 3 分钟前</p><button class="btn" data-action="probe">重新探测</button></article></div>
+<div class="grid two"><article class="card"><div class="cardhead"><h3>能力路由</h3><small>未覆盖时继承默认主模型</small></div>${[['默认主模型','gpt-5.6-terra','v12','100%'],['意图理解','继承默认','v12','100%'],['任务规划','gpt-5.6-sol','v7','20% 灰度'],['小说拆解','gpt-5.6-sol','v7','100%'],['批量轻任务','gpt-5.6-luna','v3','100%']].map(r=>`<div class="route"><div><b>${r[0]}</b><small>capability route</small></div><div>${r[1]}</div><div>${r[2]}</div><span class="pill">${r[3]}</span></div>`).join('')}</article>
+<article class="card"><div class="cardhead"><h3>发布检查</h3><small>revision v13 草稿</small></div><div class="alerts"><div class="alert ok"><span class="dot"></span><div><b>结构与 SSRF 校验通过</b><p>HTTPS · 主机已批准 · 无私网解析</p></div></div><div class="alert ok"><span class="dot"></span><div><b>鉴权与模型读取通过</b><p>request_id 已记录</p></div></div><div class="alert"><span class="dot"></span><div><b>能力评测尚未完成</b><p>中文意图、不满意解析、工具规划</p></div></div><div class="alert"><span class="dot"></span><div><b>等待第二位管理员审批</b><p>正式扣费环境双人发布</p></div></div></div></article></div>
+<article class="card" style="margin-top:14px"><div class="cardhead"><h3>部署版本</h3><small>密钥永不回传明文</small></div><div class="tablewrap" style="border:0"><table class="table"><thead><tr><th>版本</th><th>模型</th><th>Base URL 主机</th><th>测试</th><th>状态</th><th>创建人</th><th>发布时间</th><th>24h 成功率</th></tr></thead><tbody><tr><td><b>v13</b></td><td>gpt-5.6-terra</td><td>api.openai.com</td><td>${status('待评测','warn')}</td><td>草稿</td><td>Alan</td><td>—</td><td>—</td></tr><tr><td><b>v12</b></td><td>gpt-5.6-terra</td><td>api.openai.com</td><td>${status('通过','ok')}</td><td>${status('生效中','ok')}</td><td>Alan</td><td>08/12 16:40</td><td>97.8%</td></tr><tr><td><b>v11</b></td><td>gpt-5.6-terra</td><td>api.openai.com</td><td>${status('通过','ok')}</td><td>可回滚</td><td>Alan</td><td>08/06 09:20</td><td>97.1%</td></tr></tbody></table></div></article>`}
+function audit(){return `${heading('审计与安全','不可变记录高风险操作、权限变化和内容访问','<button class="btn">导出审计记录</button>')}<div class="filters"><input placeholder="搜索操作者、目标或请求 ID"><select><option>全部风险级别</option><option>高风险</option><option>普通</option></select></div><article class="card">${[['10:31:42','Alan Wei','创建模型配置草稿 v13','成功'],['09:16:30','Alan Wei','为星河漫画社授予 10,000 积分 · FIN-0813','成功'],['08:54:10','Support 02','查看任务 MG-8F41C2 元数据 · 工单 CS-281','成功'],['昨天 18:22','System','冻结 120 积分 · unknown_outcome','成功'],['昨天 16:40','Alan Wei + Owner 02','发布主模型配置 v12','成功']].map(r=>`<div class="audit"><time>${r[0]}</time><b>${r[1]}</b><div>${r[2]}</div>${status(r[3],'ok')}</div>`).join('')}</article>`}
+const views={overview,organizations,accounts,credits,tasks,models,audit};
+function render(view){const safe=views[view]?view:'overview';document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===safe));document.getElementById('pageTitle').textContent=titles[safe];document.getElementById('content').innerHTML=views[safe]();location.hash=safe;bindActions()}
+function bindActions(){document.querySelectorAll('[data-action="model"]').forEach(b=>b.onclick=()=>document.getElementById('modelDialog').showModal());document.querySelectorAll('[data-action="credit"]').forEach(b=>b.onclick=()=>document.getElementById('creditDialog').showModal());document.querySelectorAll('[data-action="task"]').forEach(b=>b.onclick=()=>document.getElementById('taskDialog').showModal());document.querySelectorAll('[data-open="org"]').forEach(b=>b.onclick=()=>toast('组织详情将在后端实施阶段接入真实数据'));document.querySelectorAll('[data-action="probe"]').forEach(b=>b.onclick=()=>toast('模拟探测完成：连接正常 · 412 ms'));document.querySelectorAll('[data-action="rollback"]').forEach(b=>b.onclick=()=>toast('回滚需要二次认证与发布原因'));document.querySelectorAll('[data-action="newOrg"]').forEach(b=>b.onclick=()=>toast('新建组织流程：基本资料 → Owner → 积分策略 → 审计'))}
+function toast(message){const el=document.createElement('div');el.className='toast';el.textContent=message;document.getElementById('toasts').append(el);setTimeout(()=>el.remove(),3600)}
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>render(b.dataset.view)));
+document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>{const d=document.getElementById(b.dataset.close);d.close();const key=d.querySelector('#apiKey');if(key)key.value=''}));
+document.getElementById('themeBtn').addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;localStorage.setItem('mp.admin.theme',next)});
+document.documentElement.dataset.theme=localStorage.getItem('mp.admin.theme')||'light';
+document.getElementById('modelForm').addEventListener('submit',e=>{e.preventDefault();document.getElementById('apiKey').value='';document.getElementById('modelDialog').close();toast('原型演示：配置将先保存为不可变草稿，不会直接生效')});
+document.getElementById('testConnection').addEventListener('click',()=>{const b=document.getElementById('testConnection');b.disabled=true;b.textContent='测试中…';setTimeout(()=>{b.disabled=false;b.textContent='测试连接';document.getElementById('testResult').style.display='block';document.getElementById('apiKey').value=''},700)});
+document.getElementById('creditForm').addEventListener('submit',e=>{e.preventDefault();document.getElementById('creditDialog').close();toast('原型演示：正式环境将生成不可变账本流水与审计事件')});
+document.getElementById('reconcileDemo').addEventListener('click',()=>{document.getElementById('taskDialog').close();render('credits');toast('已带入待核对费用筛选；普通重试保持关闭')});
+document.querySelector('.nav-return').addEventListener('click',()=>toast('原型不会离开当前页面'));
+document.getElementById('globalSearch').addEventListener('keydown',e=>{if(e.key==='Enter')toast(`全局搜索：${e.currentTarget.value||'请输入关键字'}`)});
+render(location.hash.slice(1)||'overview');
+</script>
+</body>
+</html>

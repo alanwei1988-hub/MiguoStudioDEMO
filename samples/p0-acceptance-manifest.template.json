@@ -1,0 +1,120 @@
+{
+  "schema_version": "p0.sample-manifest.v1",
+  "dataset_id": "manga-p0-001",
+  "dataset_version": 1,
+  "status": "template-replace-object-keys-and-hashes-before-freeze",
+  "pipeline_policy": {
+    "stages": ["ink", "color", "light"],
+    "max_attempts_per_stage": 2,
+    "working_color_space": "sRGB",
+    "orientation_policy": "bake_exif_orientation",
+    "layout_template_id": "p0-grid-2x2-v1"
+  },
+  "acceptance_policy": {
+    "reviewers_required": 2,
+    "minimum_passed_total": 9,
+    "minimum_passed_per_group": 3,
+    "maximum_active_edit_seconds_per_passed_panel": 600,
+    "maximum_system_active_seconds_per_panel": 2700,
+    "accepted_panel_credit_median_maximum": 160,
+    "accepted_panel_credit_p95_maximum": 240
+  },
+  "samples": [
+    {
+      "sample_id": "P0-A01",
+      "group": "A",
+      "source": { "object_key": "replace/P0-A01.png", "sha256": "0000000000000000000000000000000000000000000000000000000000000001", "mime_type": "image/png", "width": 1536, "height": 2048, "color_space": "sRGB", "orientation": 1 },
+      "rights": { "record_id": "replace-rights-A01", "test_use_allowed": true, "commercial_processing_allowed": true },
+      "content": { "person_count": 1, "draft_cleanliness": "clean", "background_complexity": "low", "has_occlusion": false, "key_prop_count": 0, "shot_type": "close_up" },
+      "brief": { "preserve": ["character_identity", "pose", "camera", "composition", "person_count"], "required_elements": ["face"], "key_light_direction": "upper_left" }
+    },
+    {
+      "sample_id": "P0-A02",
+      "group": "A",
+      "source": { "object_key": "replace/P0-A02.png", "sha256": "0000000000000000000000000000000000000000000000000000000000000002", "mime_type": "image/png", "width": 2048, "height": 1536, "color_space": "sRGB", "orientation": 1 },
+      "rights": { "record_id": "replace-rights-A02", "test_use_allowed": true, "commercial_processing_allowed": true },
+      "content": { "person_count": 1, "draft_cleanliness": "clean", "background_complexity": "none", "has_occlusion": false, "key_prop_count": 0, "shot_type": "half_body" },
+      "brief": { "preserve": ["character_identity", "pose", "camera", "composition", "person_count"], "required_elements": ["hands"], "key_light_direction": "upper_right" }
+    },
+    {
+      "sample_id": "P0-A03",
+      "group": "A",
+      "source": { "object_key": "replace/P0-A03.png", "sha256": "0000000000000000000000000000000000000000000000000000000000000003", "mime_type": "image/png", "width": 1600, "height": 1600, "color_space": "sRGB", "orientation": 1 },
+      "rights": { "record_id": "replace-rights-A03", "test_use_allowed": true, "commercial_processing_allowed": true },
+      "content": { "person_count": 1, "draft_cleanliness": "clean", "background_complexity": "low", "has_occlusion": false, "key_prop_count": 1, "shot_type": "full_body" },
+      "brief": { "preserve": ["character_identity", "pose", "camera", "composition", "person_count"], "required_elements": ["bag"], "key_light_direction": "top" }
+    },
+    {
+      "sample_id": "P0-A04",
+      "group": "A",
+      "source": { "object_key": "replace/P0-A04.png", "sha256": "0000000000000000000000000000000000000000000000000000000000000004", "mime_type": "image/png", "width": 1200, "height": 1800, "color_space": "sRGB", "orientation": 1 },
+      "rights": { "record_id": "replace-rights-A04", "test_use_allowed": true, "commercial_processing_allowed": true },
+      "content": { "person_count": 1, "draft_cleanliness": "clean", "background_complexity": "low", "has_occlusion": false, "key_prop_count": 0, "shot_type": "half_body" },
+      "brief": { "preserve": ["character_identity", "pose", "camera", "composition", "person_count"], "required_elements": ["hair_accessory"], "key_light_direction": "upper_left" }
+    },
+    {
+      "sample_id": "P0-B01",
+      "group": "B",
+      "source": { "object_key": "replace/P0-B01.png", "sha256": "0000000000000000000000000000000000000000000000000000000000000005", "mime_type": "image/png", "width": 1800, "height": 1200, "color_space": "sRGB", "orientation": 1 },
+      "rights": { "record_id": "replace-rights-B01", "test_use_allowed": true, "commercial_processing_allowed": true },
+      "content": { "person_count": 2, "draft_cleanliness": "rough", "background_complexity": "medium", "has_occlusion": true, "key_prop_count": 0, "shot_type": "half_body" },
+      "brief": { "preserve": ["character_identity", "pose", "camera", "composition", "person_count"], "required_elements": ["overlapping_hands"], "key_light_direction": "upper_right" }
+    },
+    {
+      "sample_id": "P0-B02",
+      "group": "B",
+      "source": { "object_key": "replace/P0-B02.png", "sha256": "0000000000000000000000000000000000000000000000000000000000000006", "mime_type": "image/png", "width": 1600, "height": 1600, "color_space": "sRGB", "orientation": 1 },
+      "rights": { "record_id": "replace-rights-B02", "test_use_allowed": true, "commercial_processing_allowed": true },
+      "content": { "person_count": 2, "draft_cleanliness": "rough", "background_complexity": "medium", "has_occlusion": true, "key_prop_count": 1, "shot_type": "close_up" },
+      "brief": { "preserve": ["character_identity", "pose", "camera", "composition", "person_count"], "required_elements": ["umbrella"], "key_light_direction": "top" }
+    },
+    {
+      "sample_id": "P0-B03",
+      "group": "B",
+      "source": { "object_key": "replace/P0-B03.png", "sha256": "0000000000000000000000000000000000000000000000000000000000000007", "mime_type": "image/png", "width": 1400, "height": 2100, "color_space": "sRGB", "orientation": 1 },
+      "rights": { "record_id": "replace-rights-B03", "test_use_allowed": true, "commercial_processing_allowed": true },
+      "content": { "person_count": 2, "draft_cleanliness": "rough", "background_complexity": "medium", "has_occlusion": true, "key_prop_count": 0, "shot_type": "full_body" },
+      "brief": { "preserve": ["character_identity", "pose", "camera", "composition", "person_count"], "required_elements": ["crossed_legs"], "key_light_direction": "upper_left" }
+    },
+    {
+      "sample_id": "P0-B04",
+      "group": "B",
+      "source": { "object_key": "replace/P0-B04.png", "sha256": "0000000000000000000000000000000000000000000000000000000000000008", "mime_type": "image/png", "width": 2100, "height": 1400, "color_space": "sRGB", "orientation": 1 },
+      "rights": { "record_id": "replace-rights-B04", "test_use_allowed": true, "commercial_processing_allowed": true },
+      "content": { "person_count": 2, "draft_cleanliness": "rough", "background_complexity": "medium", "has_occlusion": true, "key_prop_count": 1, "shot_type": "half_body" },
+      "brief": { "preserve": ["character_identity", "pose", "camera", "composition", "person_count"], "required_elements": ["book"], "key_light_direction": "upper_right" }
+    },
+    {
+      "sample_id": "P0-C01",
+      "group": "C",
+      "source": { "object_key": "replace/P0-C01.png", "sha256": "0000000000000000000000000000000000000000000000000000000000000009", "mime_type": "image/png", "width": 2048, "height": 2048, "color_space": "sRGB", "orientation": 1 },
+      "rights": { "record_id": "replace-rights-C01", "test_use_allowed": true, "commercial_processing_allowed": true },
+      "content": { "person_count": 1, "draft_cleanliness": "rough", "background_complexity": "complex", "has_occlusion": true, "key_prop_count": 2, "shot_type": "full_body" },
+      "brief": { "preserve": ["character_identity", "pose", "camera", "composition", "person_count"], "required_elements": ["sword", "foreground_branch", "street_background"], "key_light_direction": "upper_left" }
+    },
+    {
+      "sample_id": "P0-C02",
+      "group": "C",
+      "source": { "object_key": "replace/P0-C02.png", "sha256": "000000000000000000000000000000000000000000000000000000000000000a", "mime_type": "image/png", "width": 1280, "height": 1920, "color_space": "sRGB", "orientation": 1 },
+      "rights": { "record_id": "replace-rights-C02", "test_use_allowed": true, "commercial_processing_allowed": true },
+      "content": { "person_count": 2, "draft_cleanliness": "rough", "background_complexity": "complex", "has_occlusion": true, "key_prop_count": 1, "shot_type": "half_body" },
+      "brief": { "preserve": ["character_identity", "pose", "camera", "composition", "person_count"], "required_elements": ["table", "window_background"], "key_light_direction": "right" }
+    },
+    {
+      "sample_id": "P0-C03",
+      "group": "C",
+      "source": { "object_key": "replace/P0-C03.png", "sha256": "000000000000000000000000000000000000000000000000000000000000000b", "mime_type": "image/png", "width": 1920, "height": 1280, "color_space": "sRGB", "orientation": 1 },
+      "rights": { "record_id": "replace-rights-C03", "test_use_allowed": true, "commercial_processing_allowed": true },
+      "content": { "person_count": 3, "draft_cleanliness": "rough", "background_complexity": "complex", "has_occlusion": true, "key_prop_count": 2, "shot_type": "full_body" },
+      "brief": { "preserve": ["character_identity", "pose", "camera", "composition", "person_count"], "required_elements": ["bicycle", "bag", "station_background"], "key_light_direction": "top" }
+    },
+    {
+      "sample_id": "P0-C04",
+      "group": "C",
+      "source": { "object_key": "replace/P0-C04.png", "sha256": "000000000000000000000000000000000000000000000000000000000000000c", "mime_type": "image/png", "width": 1536, "height": 2048, "color_space": "sRGB", "orientation": 1 },
+      "rights": { "record_id": "replace-rights-C04", "test_use_allowed": true, "commercial_processing_allowed": true },
+      "content": { "person_count": 2, "draft_cleanliness": "rough", "background_complexity": "complex", "has_occlusion": true, "key_prop_count": 1, "shot_type": "close_up" },
+      "brief": { "preserve": ["character_identity", "pose", "camera", "composition", "person_count"], "required_elements": ["phone", "crowd_background"], "key_light_direction": "upper_right" }
+    }
+  ]
+}

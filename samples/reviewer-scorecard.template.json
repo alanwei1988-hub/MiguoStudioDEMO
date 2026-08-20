@@ -1,0 +1,49 @@
+{
+  "schema_version": "p0.reviewer-scorecard.v1",
+  "reviewers_required": 2,
+  "blind_fields": ["provider", "model", "attempt_number", "cost_points", "other_reviewer_scores"],
+  "score_anchors": {
+    "1": "unusable_or_violates_brief",
+    "2": "major_fix_over_10_minutes_or_regeneration",
+    "3": "usable_with_5_to_10_minutes_local_fix",
+    "4": "minor_fix_up_to_5_minutes",
+    "5": "production_ready_or_under_1_minute_fix"
+  },
+  "stages": [
+    {
+      "stage": "ink",
+      "criteria": ["sketch_and_composition_fidelity", "identity_anatomy_and_pose", "line_cleanliness_continuity_and_closure", "occlusion_and_depth_order", "detail_retention_and_artifact_control"]
+    },
+    {
+      "stage": "color",
+      "criteria": ["fill_completeness", "boundary_accuracy", "semantic_palette_accuracy", "object_and_depth_separation", "approved_line_preservation"]
+    },
+    {
+      "stage": "light",
+      "criteria": ["key_light_direction_consistency", "form_and_volume", "cast_contact_and_occlusion_shadows", "material_highlights", "readability_and_style_preservation"]
+    }
+  ],
+  "fatal_flags": ["identity_pose_or_camera_changed", "person_limb_or_key_prop_missing_or_added", "major_anatomy_failure", "major_line_break_merge_bleed_or_hole", "occlusion_order_wrong", "contradictory_light_or_unreadable_face", "stage_geometry_misaligned", "subject_redraw_or_previous_stage_return_required"],
+  "stage_gate": {
+    "minimum_total_score": 18,
+    "minimum_each_criterion": 3,
+    "fatal_flags_allowed": 0,
+    "can_proceed_must_be_true": true
+  },
+  "panel_gate": {
+    "both_reviewers_must_pass_all_stages": true,
+    "maximum_active_edit_seconds": 600,
+    "maximum_attempts_per_stage": 2
+  },
+  "review_template": {
+    "sample_id": "replace",
+    "reviewer_id": "replace-with-pseudonymous-id",
+    "geometry_alignment_ok": null,
+    "stages": {
+      "ink": { "scores": {}, "fatal_flags": [], "can_proceed_without_returning_to_previous_stage": null, "estimated_fix_minutes_band": null, "worst_region": null, "rework_note": null },
+      "color": { "scores": {}, "fatal_flags": [], "can_proceed_without_returning_to_previous_stage": null, "estimated_fix_minutes_band": null, "worst_region": null, "rework_note": null },
+      "light": { "scores": {}, "fatal_flags": [], "can_proceed_without_returning_to_previous_stage": null, "estimated_fix_minutes_band": null, "worst_region": null, "rework_note": null }
+    },
+    "active_edit_seconds": null
+  }
+}

@@ -1,0 +1,36 @@
+[Unit]
+Description=Miguo Studio MVP
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=miguo-studio
+Group=miguo-studio
+WorkingDirectory=/opt/miguo-studio/current
+Environment=NODE_ENV=production
+EnvironmentFile=/etc/miguo-studio/miguo-studio.env
+ExecStart=/opt/miguo-studio/runtime/current/bin/node src/server.mjs
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=30
+KillSignal=SIGTERM
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+CapabilityBoundingSet=
+ReadWritePaths=/var/lib/miguo-studio
+LimitNOFILE=65535
+MemoryMax=2500M
+TasksMax=512
+
+[Install]
+WantedBy=multi-user.target
